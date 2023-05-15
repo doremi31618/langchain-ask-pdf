@@ -10,7 +10,7 @@ RUN pip3 install -r requirements.txt
 # 把程式碼複製到容器中的 app 目錄
 COPY . .
 
-EXPOSE 8080
+EXPOSE 8501
 
 # 設定 streamlit 應用程式啟動時的指令
 CMD [ "streamlit", "run", "app.py"]
