@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import os
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
@@ -32,9 +33,14 @@ def main():
         length_function=len
       )
       chunks = text_splitter.split_text(text)
+
+      # detect repl.it env
+      openai_key = os.getenv("OPENAI_API_KEY", default=None) 
+      if openai_key is None:
+        openai_key = os.environ['OPENAI_API_KEY']
       
       # create embeddings
-      embeddings = OpenAIEmbeddings()
+      embeddings = OpenAIEmbeddings(openai_api_key=openai_key)
       knowledge_base = FAISS.from_texts(chunks, embeddings)
       
       # show user input
